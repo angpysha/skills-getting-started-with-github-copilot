@@ -59,3 +59,17 @@ def test_unregister_requires_email_query_param(client):
 
     # Assert
     assert response.status_code == 422
+
+
+def test_unregister_rejects_invalid_email(client):
+    # Arrange
+    activity_name = "Chess Club"
+
+    # Act
+    response = client.delete(
+        f"/activities/{activity_name}/participants",
+        params={"email": "not-a-valid-email"},
+    )
+
+    # Assert
+    assert response.status_code == 422
